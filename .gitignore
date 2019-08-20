@@ -1,7 +1,0 @@
-node_modules
-nodemon.json
-date_dim.sql
-Command_To_Run.txt
-server.js
-date_procedure.js
-.gitignore
