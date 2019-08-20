@@ -27,8 +27,10 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(compression());
 
+const frontEndUrl = "https://ems-react-ui.netlify.com";
+
 app.use(cors({
-	origin: "https://ems-react-ui.netlify.com",
+	origin: frontEndUrl,
 	credentials: true
 }));
 
@@ -40,7 +42,7 @@ WorkDay.belongsTo(User, {constraints: true, onDelete: 'CASCADE'});
 User.hasMany(WorkDay);
 
 app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', "https://ems-react-ui.netlify.com");
+	res.header('Access-Control-Allow-Origin', frontEndUrl);
 	res.header('Access-Control-Allow-Credentials', true);
 	res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 	if (req.method === 'OPTIONS') {
