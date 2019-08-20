@@ -52,49 +52,12 @@ app.use((req, res, next) => {
 
 app.use(userRoutes);
 
-// app.get('*', (req, res, next) => {
-//   res.sendFile(path.join(__dirname + '/index.html'));
-// 	// next();
-// });
-
 (async () => {
-	let startDate = new Date("2019-01-01");
-	let endDate = new Date("2021-01-01");
-	let currDate = startDate;
-
-	let months = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ];
-		let days = [ 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday' ];
-
-	Date.prototype.getWeekNumber = (year, month, day) => {
-		let d = new Date(Date.UTC(year, month, day));
-		let dayNum = d.getUTCDay() || 7;
-		d.setUTCDate(d.getUTCDate() + 4 - dayNum);
-		let yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-		return Math.ceil(((d - yearStart) / 86400000 + 1) / 7);
-	};
 
 	try {
 		// await sequelize.sync({ force: true });
 
 		await sequelize.sync();
-
-		// while (currDate < endDate) {
-		// 	let id = `${currDate.getFullYear()}${currDate.getMonth() + 1 < 10 ? '0' + (currDate.getMonth() + 1) : currDate.getMonth() + 1}${currDate.getDate() < 10 ? '0' + currDate.getDate() : currDate.getDate()}`;
-		// 	let date = `${currDate.getFullYear()}-${currDate.getMonth() + 1}-${currDate.getDate()}`;
-		//   await DateDim.create({
-		// 		id: parseInt(id),
-		// 		date: date,
-		// 		y: currDate.getFullYear(),
-		// 		m: currDate.getMonth(),
-		// 		d: currDate.getDate(),
-		// 		w: currDate.getWeekNumber(currDate.getFullYear(), currDate.getMonth(), currDate.getDate()),
-		// 		q: Math.floor(((new Date(currDate.getFullYear(), currDate.getMonth(), currDate.getDate()).getMonth() + 11) / 3) % 4) + 1,
-		// 		wd: currDate.getDay(),
-		// 		wd_name: days[currDate.getDay()],
-		// 		m_name: months[currDate.getMonth()]
-		// 	});
-		//   currDate.setDate(new Date(currDate).getDate() + 1);
-		// }
 
 		await app.listen(port);
 
