@@ -52,10 +52,10 @@ app.use((req, res, next) => {
 
 app.use(userRoutes);
 
-app.get('*', (req, res, next) => {
-  res.sendFile(path.join(__dirname + '/index.html'));
-	// next();
-});
+// app.get('*', (req, res, next) => {
+//   res.sendFile(path.join(__dirname + '/index.html'));
+// 	// next();
+// });
 
 (async () => {
 	let startDate = new Date("2019-01-01");
