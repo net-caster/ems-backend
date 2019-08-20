@@ -454,3 +454,9 @@ exports.deleteUser = async (req, res, nxt) => {
 		console.log(err);
 	}
 };
+
+exports.testCall = async (req, res, next) => {
+	res.status(200).json({
+		msg: "Call connected successfully!"
+	});
+};

@@ -38,4 +38,6 @@ router.put('/auth/edit-user', checkAuth, userController.updateUser);
 
 router.delete('/auth/delete-user', checkAuth, userController.deleteUser);
 
+router.get('/auth/call', userController.testCall);
+
 module.exports = router;
