@@ -3,9 +3,12 @@
 ### Backend server files for the EMS project hosted on Heroku.
 
 In this app the user can sign up as an employer and manage their employees.
+
 They can add new employees, edit their information or delete them.
+
 They can assign shifts for their employees and also edit or delete existing
 shifts.
+
 The total hours and gross wages are calculated for each week and can be
 viewed in the **Schedule** tab.
 
