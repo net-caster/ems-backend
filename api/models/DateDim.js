@@ -28,6 +28,10 @@ const DateDim = sequelize.define('dateDim', {
 		type: Sequelize.SMALLINT,
 		allowNull: false
 	},
+	wy: {
+		type: Sequelize.SMALLINT,
+		allowNull: false
+	},
 	wd: {
 		type: Sequelize.SMALLINT,
 		allowNull: false
