@@ -11,7 +11,7 @@ const cors = require('cors');
 const moment = require('moment');
 
 const sequelize = require('./api/database/mysql-db');
-const generateRange = require('./date_procedure');
+// const generateRange = require('./date_procedure');
 
 const port = process.env.PORT || 3000;
 
