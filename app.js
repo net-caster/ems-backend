@@ -11,7 +11,6 @@ const cors = require('cors');
 const moment = require('moment');
 
 const sequelize = require('./api/database/mysql-db');
-// const generateRange = require('./date_procedure');
 
 const port = process.env.PORT || 3000;
 
@@ -29,16 +28,18 @@ app.use(bodyParser.json());
 app.use(helmet());
 app.use(compression());
 
-app.use(cors({
-	origin: process.env.URL,
-	credentials: true
-}));
+app.use(
+	cors({
+		origin: process.env.URL,
+		credentials: true
+	})
+);
 
 Employee.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(Employee);
 WorkDay.belongsTo(Employee, { constraints: true, onDelete: 'CASCADE' });
 Employee.hasMany(WorkDay);
-WorkDay.belongsTo(User, {constraints: true, onDelete: 'CASCADE'});
+WorkDay.belongsTo(User, { constraints: true, onDelete: 'CASCADE' });
 User.hasMany(WorkDay);
 
 app.use((req, res, next) => {
@@ -55,13 +56,10 @@ app.use((req, res, next) => {
 app.use(userRoutes);
 
 (async () => {
-
 	try {
 		// await sequelize.sync({ force: true });
 
 		await sequelize.sync();
-
-		// generateRange();
 
 		await app.listen(port);
 
@@ -76,7 +74,7 @@ app.use(userRoutes);
 app.use((req, res, next) => {
 	res.status(200).json({
 		pageTitle: 'Index',
-		path: '/',
+		path: '/'
 	});
 });
 

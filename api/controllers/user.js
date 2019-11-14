@@ -14,18 +14,6 @@ const editUserValidation = require('../middleware/editUserValidator');
 const shiftValidator = require('../middleware/shiftValidator');
 const currDate = require('../utils/currDate');
 
-exports.fetchDates = async (req, res, next) => {
-
-	try {
-		const dates = await DateDim.findAll({where: {m: {[Op.between]: [`${currDate.month - 12}`, `${currDate.month + 12}`]}}});
-		res.status(200).json({
-			dates: dates
-		});
-	} catch (err) {
-		console.log(err);
-	}
-};
-
 exports.fetchEmployees = async (req, res, next) => {
 	const userId = req.userId;
 
@@ -127,7 +115,7 @@ exports.deleteEmployee = async (req, res, next) => {
 	}
 };
 
-exports.fetchShifts = async (req, res, next) => {
+exports.fetchAllShifts = async (req, res, next) => {
 	const userId = req.userId;
 
 	try {
@@ -159,8 +147,28 @@ exports.fetchShift = async (req, res, next) => {
 	}
 };
 
+exports.fetchDayShifts = async (req, res, next) => {
+	const year = req.headers.year;
+	const month = req.headers.month;
+	const day = req.headers.day;
+	const userId = req.userId;
+
+	console.log(req.headers);
+
+	try {
+		const shifts = await WorkDay.findAll({where: {userId: userId, year: year, month: month, day: day}});
+		res.status(200).json({
+			calendarShifts: shifts
+		});
+	} catch (err) {
+		console.log(err);
+	}
+};
+
 exports.addShift = async (req, res, next) => {
-	const { employeeId, payRate, userId, name, date, dateId, weekNum, hourStart, minutesStart, hourEnd, minutesEnd, shiftHours, shiftWage, year, month, day, weekDay } = req.body;
+	const { employeeId, payRate, userId, name, date, dateId, weekNum, hourStart, minutesStart, hourEnd, minutesEnd, deduct, shiftHours, shiftWage, year, month, day, weekDay } = req.body;
+
+	console.log(req.body);
 
 	if (shiftValidator(req.body)) {
 		try {
@@ -184,6 +192,7 @@ exports.addShift = async (req, res, next) => {
 				userId: userId,
 				shift_start: `${hourStart}:${minutesStart}`,
 				shift_end: `${hourEnd}:${minutesEnd}`,
+				break_length: deduct,
 				shift_hours: shiftHours,
 				shift_wage: shiftWage,
 				date: date,
@@ -193,6 +202,7 @@ exports.addShift = async (req, res, next) => {
 				day: day,
 				week_day: weekDay
 			});
+			console.log(workDay);
 			res.status(200).json({
 				msg: `A shift for ${employee.name} has been added on ${date}.`,
 				redirect: true
@@ -205,7 +215,7 @@ exports.addShift = async (req, res, next) => {
 
 exports.updateShift = async (req, res, next) => {
 	const shiftId = req.params.shiftId;
-	const { hourStart, minutesStart, hourEnd, minutesEnd, shiftHours, shiftWage } = req.body;
+	const { hourStart, minutesStart, hourEnd, minutesEnd, shiftHours, shiftWage, deduct } = req.body;
 
 	if (shiftHours !== 0) {
 		try {
@@ -220,6 +230,7 @@ exports.updateShift = async (req, res, next) => {
 				workDay.shift_end = `${hourEnd}:${minutesEnd}`;
 				workDay.shift_hours = shiftHours;
 				workDay.shift_wage = shiftWage;
+				workDay.break_length = deduct;
 
 				workDay.save();
 

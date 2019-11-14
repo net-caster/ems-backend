@@ -20,9 +20,9 @@ router.put('/auth/edit-employee/:employeeId', checkAuth, userController.updateEm
 
 router.delete('/auth/delete-employee/:employeeId', checkAuth, userController.deleteEmployee);
 
-router.get('/auth/get-shifts', checkAuth, userController.fetchShifts);
+router.get('/auth/get-shifts', checkAuth, userController.fetchAllShifts);
 
-router.get('/auth/get-schedule', checkAuth, userController.fetchDates);
+router.get('/auth/get-schedule', checkAuth, userController.fetchDayShifts);
 
 router.get('/auth/get-shift/:shiftId', checkAuth, userController.fetchShift);
 
